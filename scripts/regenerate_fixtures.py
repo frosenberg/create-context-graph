@@ -29,7 +29,7 @@ except ImportError:
 
 
 FIXTURES_DIR = Path(__file__).parent.parent / "src" / "create_context_graph" / "fixtures"
-MODEL = "claude-sonnet-4-20250514"
+MODEL = "claude-sonnet-5"
 MAX_RETRIES = 3
 
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 
 from langchain_anthropic import ChatAnthropic
 from langchain_core.tools import tool
@@ -71,7 +72,7 @@ TOOLS = [
 
 {% raw %}
 model = ChatAnthropic(
-    model="claude-sonnet-4-20250514",
+    model=os.getenv("ANTHROPIC_MODEL", "claude-sonnet-5"),
     api_key=settings.anthropic_api_key,
 )
 

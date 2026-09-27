@@ -83,7 +83,7 @@ def _llm_generate(
 
     if provider == "anthropic":
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model="claude-sonnet-5",
             max_tokens=max_tokens,
             system=system,
             messages=[{"role": "user", "content": prompt}],
