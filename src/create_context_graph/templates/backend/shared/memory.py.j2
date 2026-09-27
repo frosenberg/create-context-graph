@@ -169,7 +169,12 @@ def _build_memory_settings():
     if settings.neo4j_database:
         neo4j_config["database"] = settings.neo4j_database
 
+    # backend="bolt" must be explicit: MemorySettings otherwise auto-selects
+    # NAMS whenever MEMORY_API_KEY is in the process env (e.g. exported in the
+    # shell), silently diverging from MEMORY_BACKEND=bolt and bypassing the
+    # NAMS conversation-id mapping in _resolve_nams_conversation().
     return MemorySettings(
+        backend="bolt",
         neo4j=neo4j_config,
         **common,
     )

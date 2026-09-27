@@ -388,6 +388,17 @@ class TestGeneratedMemorySettings:
         neo4j_config = lib.MemorySettings.call_args.kwargs["neo4j"]
         assert "database" not in neo4j_config
 
+    def test_bolt_backend_is_explicit(self, bolt_backend_dir):
+        """MemorySettings auto-selects NAMS when MEMORY_API_KEY is in the
+        process env; MEMORY_BACKEND=bolt must pin backend="bolt" or the SDK
+        silently talks to NAMS while the app believes it's on bolt (every
+        store_message then 404s — the conversation-id mapping is skipped)."""
+        mem, lib = self._load(bolt_backend_dir, database="")
+
+        mem._build_memory_settings()
+
+        assert lib.MemorySettings.call_args.kwargs["backend"] == "bolt"
+
 
 class TestStoreMessageErrorSurfacing:
     """PR #60: store_message() failures must reach get_error_category() —
